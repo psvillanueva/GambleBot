@@ -26,8 +26,7 @@ client.on('message', message => {
   }
 
   if (commandToken.indexOf('points') >= 1) {
-    const currentPoints = points[message.author.username] || 1;
-    points[message.author.username] = currentPoints;
+    const currentPoints = points[message.author.username] || 0;
     message.reply(`you have ${currentPoints} point(s).`);
   }
 
