@@ -56,6 +56,7 @@ client.on('message', message => {
 function gamble(user, stake) {
   const roll = getRandomInt(100);
   const wager = stake === 'all' ? points[user] : parseInt(stake);
+  let multiplier;
 
   if (wager < 1) {
     return 'you must gamble at least 1 point.';
@@ -65,21 +66,30 @@ function gamble(user, stake) {
     return 'you have insufficient points!';
   }
 
-  if (roll >= 0 && roll < 50) {
-    return deductPoints(user, wager);
+  deductPoints(user, wager);
+
+  if (roll >= 0 && roll < 49) {
+    return `sucks to suck! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
+  } else if (roll >= 49 && roll < 97) {
+    multiplier = 2;
+    awardPoints(user, wager, multiplier);
+    multiplier = 3;
+  } else if (roll >= 97 && roll < 99) {
+    awardPoints(user, wager, multiplier);
   } else {
-    return awardPoints(user, wager);
+    multiplier = 5;
+    awardPoints(user, wager, multiplier);
   }
+
+  return `congrats! You won ${wager} x ${multiplier} point(s)! You now have ${points[user]} point(s)!`;
 }
 
 function awardPoints(user, wager) {
   points[user] = points[user] + wager;
-  return `congrats! You won ${wager} point(s)! You now have ${points[user]} point(s)!`;
 }
 
 function deductPoints(user, wager) {
   points[user] = points[user] - wager;
-  return `sucks to suck! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
 }
 
 function getRandomInt(max) {
