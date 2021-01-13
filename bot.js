@@ -9,7 +9,9 @@ client.on('ready', () => {
 
 client.on('message', message => {
   const tokens = message.content.split(' '); // split on whitespaces
-
+  console.log(tokens);
+  console.log(message.content);
+  console.log(message.author)
   if (tokens.length && tokens[0].startsWith('!')) {
     if (message.content.indexOf('gamble') > 1) {
       message.reply('Fuck me.');
