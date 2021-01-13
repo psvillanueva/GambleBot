@@ -16,11 +16,6 @@ client.on('message', message => {
   const tokens = message.content.split(' '); // split on whitespaces
   const commandToken = tokens[0];
 
-  if (message.author.username === 'drux7') {
-    message.reply('smd.');
-    return;
-  }
-
   if (commandToken.indexOf('enter') >= 1) {
     points[message.author.username] = 0;
     message.reply('you are now collecting points!');
