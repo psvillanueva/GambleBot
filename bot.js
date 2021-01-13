@@ -84,8 +84,8 @@ function gamble(user, stake) {
   return `congrats! You won ${wager} x ${multiplier} point(s)! You now have ${points[user]} point(s)!`;
 }
 
-function awardPoints(user, wager) {
-  points[user] = points[user] + wager;
+function awardPoints(user, wager, multiplier) {
+  points[user] = points[user] + (wager * multiplier);
 }
 
 function deductPoints(user, wager) {
