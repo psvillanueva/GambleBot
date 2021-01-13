@@ -18,28 +18,67 @@ client.on('message', message => {
 
   if (message.author.username === 'drux7') {
     message.reply('smd.');
+    return;
   }
 
   if (commandToken.indexOf('enter') >= 1) {
     points[message.author.username] = 0;
-    message.reply('you are now collecting points.');
+    message.reply('you are now collecting points!');
+    return;
   }
 
   if (commandToken.indexOf('points') >= 1) {
     const currentPoints = points[message.author.username] || 0;
-    message.reply(`you have ${currentPoints} point(s).`);
+    message.reply(`you have ${currentPoints} point(s)!`);
+    return;
   }
 
   if (commandToken.indexOf('gamble') >= 1) {
-    message.reply('fuck me.');
+    if (tokens.length < 2) {
+      message.reply('you have to specify the amount to wager!');
+      return;
+    }
+
+    const wager = tokens[1];
+    if (wager === 'all' || parseInt(wager) !== NaN) {
+      const content = gamble(message.author.username, wager);
+      message.reply(content);
+      return;
+    }
   }
 });
 
 function gamble(user, points) {
-  if (points === 'all') {
-    points[user] = 0;
-    message.reply('You lose');
+  const roll = getRandomInt(100);
+  const wager = points === 'all' ? points[user] : parseInt(points);
+
+  if (wager < 1) {
+    return 'you must gamble at least 1 point.';
   }
+
+  if (wager > points[user]) {
+    return 'you have insufficient points!';
+  }
+
+  if (roll >= 0 && roll < 50) {
+    return deductPoints(user, wager);
+  } else {
+    return awardPoints(user, wager);
+  }
+}
+
+function awardPoints(user, wager) {
+  points[user] = points[user] + wager;
+  return `congrats! You won ${wager} point(s)! You now have ${points[user]} point(s)!`;
+}
+
+function deductPoints(user, wager) {
+  points[user] = points[user] - wager;
+  return `sucks to suck! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 function addPoint() {
