@@ -43,7 +43,7 @@ client.on('message', message => {
     }
 
     const wager = tokens[1];
-    if (wager === 'all' || parseInt(wager) !== NaN) {
+    if (wager === 'all' || !isNaN(parseInt(wager))) {
       const content = gamble(message.author.username, wager);
       message.reply(content);
       return;
