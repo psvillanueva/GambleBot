@@ -12,9 +12,14 @@ client.on('message', message => {
   console.log(tokens);
   console.log(message.content);
   console.log(message.author)
+  console.log(tokens[0]);
   if (tokens.length && tokens[0].startsWith('!')) {
     if (message.content.indexOf('gamble') > 1) {
       message.reply('Fuck me.');
+    }
+
+    if (message.author.username === 'drux7') {
+      message.reply('SMD.');
     }
   }
 });
