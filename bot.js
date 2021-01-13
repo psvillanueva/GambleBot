@@ -48,7 +48,7 @@ client.on('message', message => {
       message.reply(content);
       return;
     } else {
-      message.reply(`you cannot gamble ${wager}`!);
+      message.reply(`you cannot gamble ${wager}!`);
     }
   }
 });
