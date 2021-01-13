@@ -43,9 +43,9 @@ client.on('message', message => {
   }
 });
 
-function gamble(user, points) {
+function gamble(user, stake) {
   const roll = getRandomInt(100);
-  const wager = points === 'all' ? points[user] : parseInt(points);
+  const wager = stake === 'all' ? points[user] : parseInt(stake);
 
   if (wager < 1) {
     return 'you must gamble at least 1 point.';
