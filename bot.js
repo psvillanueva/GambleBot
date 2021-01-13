@@ -17,22 +17,22 @@ client.on('message', message => {
   const commandToken = tokens[0];
 
   if (message.author.username === 'drux7') {
-    message.reply('SMD.');
+    message.reply('smd.');
   }
 
   if (commandToken.indexOf('enter') >= 1) {
     points[message.author.username] = 0;
-    message.reply('You are now collecting points.');
+    message.reply('you are now collecting points.');
   }
 
   if (commandToken.indexOf('points') >= 1) {
     const currentPoints = points[message.author.username] || 1;
     points[message.author.username] = currentPoints;
-    message.reply(`You have ${currentPoints} points`);
+    message.reply(`you have ${currentPoints} points`);
   }
 
   if (commandToken.indexOf('gamble') >= 1) {
-    message.reply('Fuck me.');
+    message.reply('fuck me.');
   }
 });
 
