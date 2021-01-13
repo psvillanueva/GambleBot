@@ -45,7 +45,7 @@ function gamble(user, points) {
 function addPoint() {
   for (const [key, value] of Object.entries(points)) {
     const userPoints = value + 1;
-    points[key] = value;
+    points[key] = userPoints;
   }
 }
 
