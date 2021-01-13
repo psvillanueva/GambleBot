@@ -73,8 +73,8 @@ function gamble(user, stake) {
   } else if (roll >= 49 && roll < 97) {
     multiplier = 2;
     awardPoints(user, wager, multiplier);
-    multiplier = 3;
   } else if (roll >= 97 && roll < 99) {
+    multiplier = 3;
     awardPoints(user, wager, multiplier);
   } else {
     multiplier = 5;
