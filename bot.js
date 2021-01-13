@@ -28,7 +28,7 @@ client.on('message', message => {
   if (commandToken.indexOf('points') >= 1) {
     const currentPoints = points[message.author.username] || 1;
     points[message.author.username] = currentPoints;
-    message.reply(`you have ${currentPoints} points`);
+    message.reply(`you have ${currentPoints} point(s).`);
   }
 
   if (commandToken.indexOf('gamble') >= 1) {
@@ -50,7 +50,7 @@ function addPoint() {
   }
 }
 
-setTimeout(addPoint, 1000);
+setInterval(addPoint, 1000);
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
