@@ -13,18 +13,26 @@ client.on('message', message => {
     return;
   }
 
+  // init points for user
+  if (points[message.author.username] === undefined) {
+    points[message.author.username] = 0;
+    message.reply('you are now collecting points!');
+  }
+
   const tokens = message.content.split(' '); // split on whitespaces
   const commandToken = tokens[0];
 
   if (commandToken.indexOf('enter') >= 1) {
-    points[message.author.username] = 0;
-    message.reply('you are now collecting points!');
+    if (points[message.author.username]) {
+      message.reply('you have already entered.');
+      return;
+    }
+
     return;
   }
 
   if (commandToken.indexOf('points') >= 1) {
-    const currentPoints = points[message.author.username] || 0;
-    message.reply(`you have ${currentPoints} point(s)!`);
+    message.reply(`you have ${points[message.author.username]} point(s)!`);
     return;
   }
 
@@ -83,7 +91,7 @@ function addPoint() {
   }
 }
 
-setInterval(addPoint, 1000);
+setInterval(addPoint, 10000);
 
 // THIS  MUST  BE  THIS  WAY
-client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
+client.login(process.env.BOT_TOKEN); //BOT_TOKEN is the Client Secret
