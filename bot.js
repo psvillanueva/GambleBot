@@ -47,6 +47,8 @@ client.on('message', message => {
       const content = gamble(message.author.username, wager);
       message.reply(content);
       return;
+    } else {
+      message.reply(`you cannot gamble ${wager}`)
     }
   }
 });
