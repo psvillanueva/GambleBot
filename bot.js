@@ -14,10 +14,6 @@ client.on('message', message => {
     if (message.content.indexOf('gamble') > 1) {
       message.reply('Fuck me.');
     }
-
-    if (message.author.indexOf('drux7') > 0) {
-      message.reply('SMD');
-    }
   }
 });
 
@@ -28,6 +24,5 @@ function gamble(user, points) {
   }
 }
 
-console.log(`Using secret key: ${process.env.BOT_TOKEN}`);
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
