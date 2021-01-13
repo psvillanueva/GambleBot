@@ -16,12 +16,23 @@ client.on('message', message => {
   const tokens = message.content.split(' '); // split on whitespaces
   const commandToken = tokens[0];
 
-  if (commandToken.indexOf('gamble') >= 1) {
-    message.reply('Fuck me.');
-  }
-
   if (message.author.username === 'drux7') {
     message.reply('SMD.');
+  }
+
+  if (commandToken.indexOf('enter') >= 1) {
+    points[message.author.username] = 0;
+    message.reply('You are now collecting points.');
+  }
+
+  if (commandToken.indexOf('points') >= 1) {
+    const currentPoints = points[message.author.username] || 1;
+    point[message.author.username] = currentPoints;
+    message.reply(`You have ${currentPoints} points`);
+  }
+
+  if (commandToken.indexOf('gamble') >= 1) {
+    message.reply('Fuck me.');
   }
 });
 
@@ -31,6 +42,15 @@ function gamble(user, points) {
     message.reply('You lose');
   }
 }
+
+function addPoint() {
+  for (const [key, value] of Object.entries(points)) {
+    const userPoints = value + 1;
+    points[key] = value;
+  }
+}
+
+setTimeout(addPoint, 1000);
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
