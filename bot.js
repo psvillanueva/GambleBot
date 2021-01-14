@@ -18,6 +18,10 @@ client.on('ready', () => {
 	firebase.initializeApp(config);
 
 	database = firebase.database();
+
+	// try to read from DB
+	readUserData();
+
 	console.log('I am ready!');
 });
 
@@ -29,8 +33,7 @@ client.on('message', message => {
 
 	// init points for user
 	if (points[message.author.username] === undefined) {
-		// try to read from DB
-		readUserData(message.author.username);
+		points[user] = 10000;
 		message.reply('you are now collecting points!');
 	}
 
@@ -119,10 +122,13 @@ function addPoint() {
 	}
 }
 
-function readUserData(user) {
-	return database.ref('/users/' + user).once('value').then((snapshot) => {
-		const userPoints = (snapshot.val() && snapshot.val().points) || 10000;
-		points[user] = userPoints; // store locally
+function readUserData() {
+	return database.ref('users').once('value').then((userSnapshots) => {
+		userSnapshots.forEach((nextUserSnapshot) => {
+			const user = nextUserSnapshot.key;
+			const snapshotVal = nextUserSnapshot.val()
+			points[user] = (snapshotVal && snapshotVal.points); // store locally
+		});
 	});
 }
 
