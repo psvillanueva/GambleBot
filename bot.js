@@ -87,7 +87,7 @@ function gamble(user, stake) {
 	deductPoints(user, wager);
 
 	if (roll >= 0 && roll < 49) {
-		return `sucks to suck :PepeHands:! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
+		return `sucks to suck <:PepeHands:475079438825160724>! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
 	} else if (roll >= 49 && roll < 97) {
 		multiplier = 2;
 		awardPoints(user, wager, multiplier);
@@ -99,7 +99,7 @@ function gamble(user, stake) {
 		awardPoints(user, wager, multiplier);
 	}
 
-	return `congrats :PogChamp:! You won ${wager} x ${multiplier-1} point(s)! You now have ${points[user]} point(s)!`;
+	return `congrats <:Pog:469004862848368640>! You won ${wager} x ${multiplier-1} point(s)! You now have ${points[user]} point(s)!`;
 }
 
 function awardPoints(user, wager, multiplier) {
@@ -144,7 +144,7 @@ function saveToDatabase() {
 }
 
 setInterval(addPoint, 10000);
-setInterval(saveToDatabase, 600000);
+setInterval(saveToDatabase, 60000);
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN); //BOT_TOKEN is the Client Secret
