@@ -118,7 +118,6 @@ function addPoint() {
 	for (const [key, value] of Object.entries(points)) {
 		const userPoints = value + 1;
 		points[key] = userPoints;
-		writeUserData(key, userPoints);
 	}
 }
 
@@ -145,7 +144,7 @@ function saveToDatabase() {
 }
 
 setInterval(addPoint, 10000);
-setInterval(saveToDatabase, 60000);
+setInterval(saveToDatabase, 600000);
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN); //BOT_TOKEN is the Client Secret
