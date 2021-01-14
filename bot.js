@@ -8,8 +8,6 @@ const points = {};
 let database;
 
 client.on('ready', () => {
-	// Set the configuration for your app
-	// TODO: Replace with your project's config object
 	const config = {
 		apiKey: `${process.env.API_KEY}`,
 		authDomain: `${process.env.PROJECT_ID}.firebaseapp.com`,
@@ -19,7 +17,6 @@ client.on('ready', () => {
 
 	firebase.initializeApp(config);
 
-	// Get a reference to the database service
 	database = firebase.database();
 	console.log('I am ready!');
 });
@@ -87,7 +84,7 @@ function gamble(user, stake) {
 	deductPoints(user, wager);
 
 	if (roll >= 0 && roll < 49) {
-		return `sucks to suck! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
+		return `sucks to suck :PepeHands:! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
 	} else if (roll >= 49 && roll < 97) {
 		multiplier = 2;
 		awardPoints(user, wager, multiplier);
@@ -99,7 +96,7 @@ function gamble(user, stake) {
 		awardPoints(user, wager, multiplier);
 	}
 
-	return `congrats! You won ${wager} x ${multiplier-1} point(s)! You now have ${points[user]} point(s)!`;
+	return `congrats :PogChamp:! You won ${wager} x ${multiplier-1} point(s)! You now have ${points[user]} point(s)!`;
 }
 
 function awardPoints(user, wager, multiplier) {
