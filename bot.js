@@ -4,7 +4,7 @@ const firebase = require("firebase/app");
 
 require("firebase/database");
 
-const points = {};
+const pointsByUser = {};
 let database;
 
 client.on('ready', () => {
@@ -16,7 +16,6 @@ client.on('ready', () => {
 	};
 
 	firebase.initializeApp(config);
-
 	database = firebase.database();
 
 	// try to read from DB
@@ -32,8 +31,8 @@ client.on('message', message => {
 	}
 
 	// init points for user
-	if (points[message.author.username] === undefined) {
-		points[message.author.username] = 10000;
+	if (pointsByUser[message.author.username] === undefined) {
+		pointsByUser[message.author.username] = 10000;
 		message.reply('you are now collecting points!');
 	}
 
@@ -41,7 +40,7 @@ client.on('message', message => {
 	const commandToken = tokens[0];
 
 	if (commandToken.indexOf('enter') >= 1) {
-		if (points[message.author.username]) {
+		if (pointsByUser[message.author.username]) {
 			message.reply('you have already entered.');
 			return;
 		}
@@ -50,7 +49,7 @@ client.on('message', message => {
 	}
 
 	if (commandToken.indexOf('points') >= 1) {
-		message.reply(`you have ${points[message.author.username]} point(s)!`);
+		message.reply(`you have ${pointsByUser[message.author.username]} point(s)!`);
 		return;
 	}
 
@@ -64,7 +63,6 @@ client.on('message', message => {
 		if (wager === 'all' || !isNaN(parseInt(wager))) {
 			const content = gamble(message.author.username, wager);
 			message.reply(content);
-			return;
 		} else {
 			message.reply(`you cannot gamble ${wager}!`);
 		}
@@ -73,21 +71,21 @@ client.on('message', message => {
 
 function gamble(user, stake) {
 	const roll = getRandomInt(100);
-	const wager = stake === 'all' ? points[user] : parseInt(stake);
+	const wager = stake === 'all' ? pointsByUser[user] : parseInt(stake);
 	let multiplier;
 
 	if (wager < 1) {
 		return 'you must gamble at least 1 point.';
 	}
 
-	if (wager > points[user]) {
+	if (wager > pointsByUser[user]) {
 		return 'you have insufficient points!';
 	}
 
 	deductPoints(user, wager);
 
 	if (roll >= 0 && roll < 49) {
-		return `sucks to suck <:PepeHands:475079438825160724>! You lost ${wager} point(s)! You now have ${points[user]} point(s)!`;
+		return `sucks to suck <:PepeHands:475079438825160724>! You lost ${wager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
 	} else if (roll >= 49 && roll < 97) {
 		multiplier = 2;
 		awardPoints(user, wager, multiplier);
@@ -99,15 +97,15 @@ function gamble(user, stake) {
 		awardPoints(user, wager, multiplier);
 	}
 
-	return `congrats <:Pog:469004862848368640>! You won ${wager} x ${multiplier-1} point(s)! You now have ${points[user]} point(s)!`;
+	return `congrats <:Pog:469004862848368640>! You won ${wager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
 }
 
 function awardPoints(user, wager, multiplier) {
-	points[user] = points[user] + (wager * multiplier);
+	pointsByUser[user] = pointsByUser[user] + (wager * multiplier);
 }
 
 function deductPoints(user, wager) {
-	points[user] = points[user] - wager;
+	pointsByUser[user] = pointsByUser[user] - wager;
 }
 
 function getRandomInt(max) {
@@ -115,9 +113,8 @@ function getRandomInt(max) {
 }
 
 function addPoint() {
-	for (const [key, value] of Object.entries(points)) {
-		const userPoints = value + 1;
-		points[key] = userPoints;
+	for (const [key, value] of Object.entries(pointsByUser)) {
+		pointsByUser[key] = value + 1;
 	}
 }
 
@@ -126,21 +123,13 @@ function readUserData() {
 		userSnapshots.forEach((nextUserSnapshot) => {
 			const user = nextUserSnapshot.key;
 			const snapshotVal = nextUserSnapshot.val()
-			points[user] = (snapshotVal && snapshotVal.points); // store locally
+			pointsByUser[user] = (snapshotVal && snapshotVal.points); // store locally
 		});
 	});
 }
 
-function writeUserData(user, points) {
-	database.ref('users/' + user).set({
-		points,
-	});
-}
-
 function saveToDatabase() {
-	for (const [key, value] of Object.entries(points)) {
-		writeUserData(key, value);
-	}
+	database.ref('users').set(pointsByUser);
 }
 
 setInterval(addPoint, 10000);
