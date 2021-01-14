@@ -32,7 +32,8 @@ client.on('message', message => {
 
 	// init points for user
 	if (points[message.author.username] === undefined) {
-		points[message.author.username] = 10000;
+		// try to read from DB
+		readUserData(message.author.username);
 		message.reply('you are now collecting points!');
 	}
 
@@ -94,11 +95,11 @@ function gamble(user, stake) {
 		multiplier = 3;
 		awardPoints(user, wager, multiplier);
 	} else {
-		multiplier = 5;
+		multiplier = 6;
 		awardPoints(user, wager, multiplier);
 	}
 
-	return `congrats! You won ${wager} x ${multiplier} point(s)! You now have ${points[user]} point(s)!`;
+	return `congrats! You won ${wager} x ${multiplier-1} point(s)! You now have ${points[user]} point(s)!`;
 }
 
 function awardPoints(user, wager, multiplier) {
@@ -117,10 +118,31 @@ function addPoint() {
 	for (const [key, value] of Object.entries(points)) {
 		const userPoints = value + 1;
 		points[key] = userPoints;
+		writeUserData(key, userPoints);
+	}
+}
+
+function readUserData(user) {
+	return database.ref('/users/' + user).once('value').then((snapshot) => {
+		const points = (snapshot.val() && snapshot.val().points) || 10000;
+		points[user] = points; // store locally
+	});
+}
+
+function writeUserData(user, points) {
+	database.ref('users/' + user).set({
+		points,
+	});
+}
+
+function saveToDatabase() {
+	for (const [key, value] of Object.entries(points)) {
+		writeUserData(key, value);
 	}
 }
 
 setInterval(addPoint, 10000);
+setInterval(saveToDatabase, 60000);
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN); //BOT_TOKEN is the Client Secret
