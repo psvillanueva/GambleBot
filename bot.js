@@ -42,24 +42,13 @@ client.on('message', message => {
 	const tokens = message.content.split(' '); // split on whitespaces
 	const commandToken = tokens[0];
 
-	if (commandToken.indexOf('enter') >= 1) {
-		if (pointsByUser[message.author.username]) {
-			message.reply('you have already entered.');
-			return;
-		}
-
-		return;
-	}
-
-	if (commandToken.indexOf('points') >= 1) {
+	if (commandToken === '!points' || commandToken === '!p') {
 		message.reply(`you have ${pointsByUser[message.author.username]} point(s)!`);
-		return;
 	}
 
-	if (commandToken.indexOf('gamble') >= 1) {
+	if (commandToken === '!gamble' || commandToken === '!g') {
 		if (tokens.length < 2) {
 			message.reply('you have to specify the amount to wager!');
-			return;
 		}
 
 		const wager = tokens[1];
@@ -69,6 +58,10 @@ client.on('message', message => {
 		} else {
 			message.reply(`you cannot gamble ${wager}!`);
 		}
+	}
+
+	if (commandToken === '!leaderboard' || commandToken === '!l') {
+		message.reply(ranks());
 	}
 });
 
@@ -109,6 +102,17 @@ function awardPoints(user, wager, multiplier) {
 
 function deductPoints(user, wager) {
 	pointsByUser[user] = pointsByUser[user] - wager;
+}
+
+function ranks() {
+	const message = '\n';
+	Object.entries(pointsByUser)
+		.sort((a, b) => b[1] - a[1])
+		.forEach((value, index) => { 
+			message.concat(`${index+1}: ${value[0]}, ${value[1]} points\n`);
+		});
+	
+	return message;
 }
 
 function getRandomInt(max) {
