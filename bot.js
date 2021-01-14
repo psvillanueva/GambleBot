@@ -105,13 +105,13 @@ function deductPoints(user, wager) {
 }
 
 function ranks() {
-	const message = '\n';
+	let message = '\n';
 	Object.entries(pointsByUser)
 		.sort((a, b) => b[1] - a[1])
-		.forEach((value, index) => { 
-			message.concat(`${index+1}: ${value[0]}, ${value[1]} points\n`);
+		.forEach((value, index) => {
+			message += `${index+1}: ${value[0]}, ${value[1]} points\n`;
 		});
-	
+
 	return message;
 }
 
