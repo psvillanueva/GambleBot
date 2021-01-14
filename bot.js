@@ -33,7 +33,7 @@ client.on('message', message => {
 
 	// init points for user
 	if (points[message.author.username] === undefined) {
-		points[user] = 10000;
+		points[message.author.username] = 10000;
 		message.reply('you are now collecting points!');
 	}
 
