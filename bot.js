@@ -21,6 +21,9 @@ client.on('ready', () => {
 	// try to read from DB
 	readUserData();
 
+	setInterval(addPoint, 10000);
+	setInterval(saveToDatabase, 10000);
+
 	console.log('I am ready!');
 });
 
@@ -130,9 +133,6 @@ function readUserData() {
 function saveToDatabase() {
 	database.ref('users').set(pointsByUser);
 }
-
-setInterval(addPoint, 10000);
-setInterval(saveToDatabase, 10000);
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN); //BOT_TOKEN is the Client Secret
