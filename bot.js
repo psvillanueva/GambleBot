@@ -122,8 +122,7 @@ function readUserData() {
 	return database.ref('users').once('value').then((userSnapshots) => {
 		userSnapshots.forEach((nextUserSnapshot) => {
 			const user = nextUserSnapshot.key;
-			const snapshotVal = nextUserSnapshot.val()
-			pointsByUser[user] = (snapshotVal && snapshotVal.points); // store locally
+			pointsByUser[user] = nextUserSnapshot.val(); // store locally
 		});
 	});
 }
@@ -133,7 +132,7 @@ function saveToDatabase() {
 }
 
 setInterval(addPoint, 10000);
-setInterval(saveToDatabase, 60000);
+setInterval(saveToDatabase, 10000);
 
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN); //BOT_TOKEN is the Client Secret
