@@ -124,8 +124,8 @@ function addPoint() {
 
 function readUserData(user) {
 	return database.ref('/users/' + user).once('value').then((snapshot) => {
-		const points = (snapshot.val() && snapshot.val().points) || 10000;
-		points[user] = points; // store locally
+		const userPoints = (snapshot.val() && snapshot.val().points) || 10000;
+		points[user] = userPoints; // store locally
 	});
 }
 
