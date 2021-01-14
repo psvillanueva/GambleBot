@@ -61,7 +61,7 @@ client.on('message', message => {
 	}
 
 	if (commandToken === '!leaderboard' || commandToken === '!l') {
-		message.reply(ranks());
+		message.channel.send(ranks());
 	}
 });
 
@@ -105,7 +105,7 @@ function deductPoints(user, wager) {
 }
 
 function ranks() {
-	let message = '\n';
+	let message = '';
 	Object.entries(pointsByUser)
 		.sort((a, b) => b[1] - a[1])
 		.forEach((value, index) => {
