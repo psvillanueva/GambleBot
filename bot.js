@@ -11,7 +11,7 @@ client.on('ready', () => {
 	const config = {
 		apiKey: `${process.env.API_KEY}`,
 		authDomain: `${process.env.PROJECT_ID}.firebaseapp.com`,
-		databaseURL: `https://${process.env.PROJECT_ID}.firebaseio.com`,
+		databaseURL: `https://${process.env.DATABASE_ID}.firebaseio.com`,
 		storageBucket: `${process.env.PROJECT_ID}.appspot.com`
 	};
 
