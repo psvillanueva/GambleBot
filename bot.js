@@ -81,7 +81,7 @@ function gamble(user, stake) {
 	deductPoints(user, wager);
 
 	if (roll >= 0 && roll < 49) {
-		return `sucks to suck <:PepeHands:475079438825160724>! You lost ${wager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+		return `you rolled a ${roll}! Sucks to suck <:PepeHands:475079438825160724>! You lost ${wager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
 	} else if (roll >= 49 && roll < 97) {
 		multiplier = multiplier || 2;
 		awardPoints(user, wager, multiplier);
@@ -93,7 +93,7 @@ function gamble(user, stake) {
 		awardPoints(user, wager, multiplier);
 	}
 
-	return `congrats <:Pog:469004862848368640>! You won ${wager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+	return `you rolled a ${roll}! Congrats <:Pog:469004862848368640>! You won ${wager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
 }
 
 function awardPoints(user, wager, multiplier) {
