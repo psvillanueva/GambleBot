@@ -53,7 +53,7 @@ client.on('message', message => {
 		}
 
 		const wager = tokens[1];
-		if (wager === 'all' || !isNaN(wager)) {
+		if (wager === 'all' || !isNaN(parseInt(wager))) {
 			const content = gamble(message.author.username, wager);
 			message.reply(content);
 		} else {
@@ -70,7 +70,7 @@ client.on('message', message => {
 		const times = parseInt(tokens[2]);
 
 		if (isNaN(wager) || isNaN(times)) {
-			message.reply(`you cannot gamble ${wager}, ${times} times!`);
+			message.reply(`you cannot gamble ${tokens[1]}, ${tokens[2]} times!`);
 		} else if (times > 100 || times < 1) {
 			message.reply(`you can only gamble between 1 to 100 times!`);
 		} else {
