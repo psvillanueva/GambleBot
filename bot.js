@@ -49,7 +49,7 @@ client.on('message', message => {
 
 	if (commandToken === '!gamble' || commandToken === '!g') {
 		if (tokens.length < 2) {
-			message.reply('you have to specify the amount to wager!');
+			message.reply('Usage: !gamble <amount>');
 		}
 
 		const wager = tokens[1];
@@ -63,7 +63,7 @@ client.on('message', message => {
 
 	if (commandToken === '!gambletimes' || commandToken === '!gt') {
 		if (tokens.length < 3) {
-			message.reply('you have to specify the amount to wager and how many times');
+			message.reply('Usage: !gambletimes <amount> <times>');
 		}
 
 		const wager = parseInt(tokens[1]);
