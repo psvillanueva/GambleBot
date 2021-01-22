@@ -52,12 +52,30 @@ client.on('message', message => {
 			message.reply('you have to specify the amount to wager!');
 		}
 
-		const wager = tokens[1];
-		if (wager === 'all' || !isNaN(parseInt(wager))) {
+		const wager = parseInt(tokens[1]);
+		if (wager === 'all' || !isNaN(wager)) {
 			const content = gamble(message.author.username, wager);
 			message.reply(content);
 		} else {
 			message.reply(`you cannot gamble ${wager}!`);
+		}
+	}
+
+	if (commandToken === '!gambletimes' || commandToken === '!gt') {
+		if (tokens.length < 3) {
+			message.reply('you have to specify the amount to wager and how many times');
+		}
+
+		const wager = parseInt(tokens[1]);
+		const times = parseInt(tokens[2]);
+
+		if (isNaN(wager) || isNaN(times)) {
+			message.reply(`you cannot gamble ${wager}, ${times} times!`);
+		} else if (times > 100 || times < 1) {
+			message.reply(`you can only gamble between 1 to 100 times!`);
+		} else {
+			const content = gamble(message.author.username, wager, times);
+			message.reply(content);
 		}
 	}
 
@@ -70,39 +88,66 @@ client.on('message', message => {
 	}
 });
 
-function gamble(user, stake) {
-	const roll = getRandomInt(100);
-	const wager = stake === 'all' ? pointsByUser[user] : parseInt(stake);
+function gamble(user, stake, times = 1) {
+	const wager = stake === 'all' ? pointsByUser[user] : stake;
 	let multiplier = stake === 'all' ? 6 : 0;
 
 	if (wager < 1) {
 		return 'you must gamble at least 1 point.';
 	}
 
-	if (wager > pointsByUser[user]) {
+	const totalWager = wager * times;
+
+	if (totalWager > pointsByUser[user]) {
 		return 'you have insufficient points!';
 	}
 
-	deductPoints(user, wager);
+	deductPoints(user, totalWager);
 
-	if (roll >= 0 && roll < 49) {
-		return `you rolled ${roll}! Sucks to suck <:PepeHands:475079438825160724>! You lost ${wager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
-	} else if (roll >= 49 && roll < 97) {
-		multiplier = multiplier || 2;
-		awardPoints(user, wager, multiplier);
-	} else if (roll >= 97 && roll < 99) {
-		multiplier = multiplier || 3;
-		awardPoints(user, wager, multiplier);
-	} else {
-		multiplier = multiplier || 6;
-		awardPoints(user, wager, multiplier);
+	const totalWinnings = 0;
+	const totalLosings = 0;
+	
+	const successes = 0;
+	const failures = 0;
+	
+	const x1 = 0;
+	const x2 = 0;
+	const x5 = 0;
+
+	for (let i = 0; i < times; i++) {
+		const roll = getRandomInt(100);
+
+		if (roll >= 0 && roll < 49) {
+			totalLosings += wager;
+			failures += 1;
+			continue;
+		} else if (roll >= 49 && roll < 97) {
+			multiplier = multiplier || 2;
+			x1 += 1;
+		} else if (roll >= 97 && roll < 99) {
+			multiplier = multiplier || 3;
+			x2 += 1;
+		} else {
+			multiplier = multiplier || 6;
+			x5 += 1;
+		}
+
+		const winnings = wager * multiplier;
+		totalWinnings += winnings;
+		awardPoints(user, winnings);
+		successes += 1;
 	}
 
-	return `you rolled ${roll}! Congrats <:Pog:469004862848368640>! You won ${wager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+	const content = '';
+	content += `Out of the ${times} you rolled:\n`;
+	content += `You won ${successes} times, earning ${totalWinnings} point(s)! x1: ${x1}, x2: ${x2}, x5: ${x5}\n`;
+	content += `You lost ${failures} times, losing ${totalLosings} point(s)!\n`;
+	content += `You netted ${totalWinnings - totalLosings} points!\n`;
+	content += `You now have ${pointsByUser[user]} point(s)!`;
 }
 
-function awardPoints(user, wager, multiplier) {
-	pointsByUser[user] = pointsByUser[user] + (wager * multiplier);
+function awardPoints(user, winnings) {
+	pointsByUser[user] = pointsByUser[user] + winnings;
 }
 
 function deductPoints(user, wager) {
