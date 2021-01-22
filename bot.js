@@ -52,7 +52,7 @@ client.on('message', message => {
 			message.reply('you have to specify the amount to wager!');
 		}
 
-		const wager = parseInt(tokens[1]);
+		const wager = tokens[1];
 		if (wager === 'all' || !isNaN(wager)) {
 			const content = gamble(message.author.username, wager);
 			message.reply(content);
@@ -89,7 +89,7 @@ client.on('message', message => {
 });
 
 function gamble(user, stake, times = 1) {
-	const wager = stake === 'all' ? pointsByUser[user] : stake;
+	const wager = stake === 'all' ? pointsByUser[user] : parseInt(stake);
 	let multiplier = stake === 'all' ? 6 : 0;
 
 	if (wager < 1) {
@@ -120,6 +120,9 @@ function gamble(user, stake, times = 1) {
 		if (roll >= 0 && roll < 49) {
 			totalLosings += wager;
 			failures += 1;
+			if (times === 1) {
+				return `you rolled ${roll}! Sucks to suck <:PepeHands:475079438825160724>! You lost ${totalWager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+			}
 			continue;
 		} else if (roll >= 49 && roll < 97) {
 			multiplier = multiplier || 2;
@@ -134,16 +137,22 @@ function gamble(user, stake, times = 1) {
 
 		const winnings = wager * multiplier;
 		totalWinnings += winnings;
-		awardPoints(user, winnings);
 		successes += 1;
+		
+		if (times === 1) {
+			return `you rolled ${roll}! Congrats <:Pog:469004862848368640>! You won ${totalWager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+		}
 	}
 
+	awardPoints(user, totalWinnings);
+
 	let content = '';
-	content += `Out of the ${times} you rolled:\n`;
+	content += `Out of the ${times} time(s) you rolled:\n`;
 	content += `You won ${successes} times, earning ${totalWinnings} point(s)! x1: ${x1}, x2: ${x2}, x5: ${x5}\n`;
 	content += `You lost ${failures} times, losing ${totalLosings} point(s)!\n`;
 	content += `You netted ${totalWinnings - totalLosings} points!\n`;
 	content += `You now have ${pointsByUser[user]} point(s)!`;
+
 	return content;
 }
 
