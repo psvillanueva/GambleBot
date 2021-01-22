@@ -57,7 +57,7 @@ client.on('message', message => {
 		// const wager = tokens[1];
 		if (wager === 'all' || !isNaN(parseInt(wager))) {
 			const content = gamble(message.author.username, wager);
-			message.reply(`Gamble Bot don't give a fuck. We gamble it all around here!` + content);
+			message.reply(`Gamble Bot don't give a fuck. We gamble it all around here!\n` + content);
 		} else {
 			message.reply(`you cannot gamble ${wager}!`);
 		}
