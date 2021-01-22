@@ -102,8 +102,6 @@ function gamble(user, stake, times = 1) {
 		return 'you have insufficient points!';
 	}
 
-	deductPoints(user, totalWager);
-
 	let totalWinnings = 0;
 	let totalLosings = 0;
 	
@@ -116,6 +114,8 @@ function gamble(user, stake, times = 1) {
 
 	for (let i = 0; i < times; i++) {
 		const roll = getRandomInt(100);
+
+		deductPoints(user, wager);
 
 		if (roll >= 0 && roll < 49) {
 			totalLosings += wager;
