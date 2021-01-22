@@ -144,6 +144,7 @@ function gamble(user, stake, times = 1) {
 	content += `You lost ${failures} times, losing ${totalLosings} point(s)!\n`;
 	content += `You netted ${totalWinnings - totalLosings} points!\n`;
 	content += `You now have ${pointsByUser[user]} point(s)!`;
+	return content;
 }
 
 function awardPoints(user, winnings) {
