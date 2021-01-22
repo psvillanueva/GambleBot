@@ -146,7 +146,7 @@ function gamble(user, stake, times = 1) {
 	}
 
 	let content = '';
-	content += `Out of the ${times} time(s) you rolled:\n`;
+	content += `out of the ${times} time(s) you rolled:\n`;
 	content += `You won ${successes} times, earning ${totalWinnings} point(s)! x1: ${x1}, x2: ${x2}, x5: ${x5}\n`;
 	content += `You lost ${failures} times, losing ${totalLosings} point(s)!\n`;
 	content += `You netted ${totalWinnings - totalLosings} points!\n`;
