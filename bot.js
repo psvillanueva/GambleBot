@@ -138,13 +138,12 @@ function gamble(user, stake, times = 1) {
 		const winnings = wager * multiplier;
 		totalWinnings += winnings;
 		successes += 1;
+		awardPoints(user, winnings);
 		
 		if (times === 1) {
 			return `you rolled ${roll}! Congrats <:Pog:469004862848368640>! You won ${totalWager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
 		}
 	}
-
-	awardPoints(user, totalWinnings);
 
 	let content = '';
 	content += `Out of the ${times} time(s) you rolled:\n`;
