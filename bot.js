@@ -47,13 +47,14 @@ client.on('message', message => {
 		message.reply(`you have ${pointsByUser[message.author.username]} point(s)!`);
 	}
 
-	if (commandToken === '!gamble' || commandToken === '!g') {
+	if (commandToken === '!gamble' || commandToken === '!g' || commandToken === '!gambletimes' || commandToken === '!gt') {
 		if (tokens.length < 2) {
 			message.reply('Usage: !gamble <amount>');
 			return;
 		}
 
-		const wager = tokens[1];
+		const wager = 'all';
+		// const wager = tokens[1];
 		if (wager === 'all' || !isNaN(parseInt(wager))) {
 			const content = gamble(message.author.username, wager);
 			message.reply(content);
