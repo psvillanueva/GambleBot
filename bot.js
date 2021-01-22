@@ -112,10 +112,10 @@ function gamble(user, stake, times = 1) {
 	let x2 = 0;
 	let x5 = 0;
 
+	deductPoints(user, totalWager);
+
 	for (let i = 0; i < times; i++) {
 		const roll = getRandomInt(100);
-
-		deductPoints(user, wager);
 
 		if (roll >= 0 && roll < 49) {
 			totalLosings += wager;
