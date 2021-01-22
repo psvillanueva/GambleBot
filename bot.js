@@ -136,7 +136,7 @@ function gamble(user, stake, times = 1) {
 		}
 
 		const winnings = wager * multiplier;
-		totalWinnings += winnings;
+		totalWinnings += (winnings - wager);
 		successes += 1;
 		awardPoints(user, winnings);
 		
