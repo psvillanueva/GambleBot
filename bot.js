@@ -63,6 +63,7 @@ client.on('message', message => {
 		}
 	}
 
+	/*
 	if (commandToken === '!gambletimes' || commandToken === '!gt') {
 		if (tokens.length < 3) {
 			message.reply('Usage: !gambletimes <amount> <times>');
@@ -81,6 +82,7 @@ client.on('message', message => {
 			message.reply(content);
 		}
 	}
+	*/
 
 	if (commandToken === '!leaderboard' || commandToken === '!l') {
 		message.channel.send(ranks());
@@ -124,7 +126,7 @@ function gamble(user, stake, times = 1) {
 			totalLosings += wager;
 			failures += 1;
 			if (times === 1) {
-				return `you rolled ${roll}! Sucks to suck <:PepeHands:475079438825160724>! You lost ${totalWager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+				return `You rolled ${roll}! Sucks to suck <:PepeHands:475079438825160724>! You lost ${totalWager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
 			}
 			continue;
 		} else if (roll >= 49 && roll < 97) {
@@ -144,7 +146,7 @@ function gamble(user, stake, times = 1) {
 		awardPoints(user, winnings);
 		
 		if (times === 1) {
-			return `you rolled ${roll}! Congrats <:Pog:469004862848368640>! You won ${totalWager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+			return `You rolled ${roll}! Congrats <:Pog:469004862848368640>! You won ${totalWager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
 		}
 	}
 
