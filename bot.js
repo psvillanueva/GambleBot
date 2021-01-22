@@ -104,15 +104,15 @@ function gamble(user, stake, times = 1) {
 
 	deductPoints(user, totalWager);
 
-	const totalWinnings = 0;
-	const totalLosings = 0;
+	let totalWinnings = 0;
+	let totalLosings = 0;
 	
-	const successes = 0;
-	const failures = 0;
+	let successes = 0;
+	let failures = 0;
 	
-	const x1 = 0;
-	const x2 = 0;
-	const x5 = 0;
+	let x1 = 0;
+	let x2 = 0;
+	let x5 = 0;
 
 	for (let i = 0; i < times; i++) {
 		const roll = getRandomInt(100);
@@ -138,7 +138,7 @@ function gamble(user, stake, times = 1) {
 		successes += 1;
 	}
 
-	const content = '';
+	let content = '';
 	content += `Out of the ${times} you rolled:\n`;
 	content += `You won ${successes} times, earning ${totalWinnings} point(s)! x1: ${x1}, x2: ${x2}, x5: ${x5}\n`;
 	content += `You lost ${failures} times, losing ${totalLosings} point(s)!\n`;
