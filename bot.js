@@ -121,6 +121,7 @@ function gamble(user, stake, times = 1) {
 
 	for (let i = 0; i < times; i++) {
 		const roll = getRandomInt(100);
+		multiplier = roll;
 
 		if (roll >= 0 && roll < 49) {
 			totalLosings += wager;
