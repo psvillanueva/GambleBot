@@ -127,7 +127,7 @@ function gamble(user, stake, times = 1) {
 			totalLosings += wager;
 			failures += 1;
 			if (times === 1) {
-				return `You rolled ${roll}! You've got to know when to hold 'em, know when to fold 'em <:PepeHands:475079438825160724>! You lost ${totalWager} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+				return `You rolled \`${roll}\`! You've got to know when to hold 'em, know when to fold 'em <:PepeHands:475079438825160724>! You lost \`${totalWager}\` point(s)! You now have \`${pointsByUser[user]}\` point(s)!`;
 			}
 			continue;
 		} else if (roll >= 49 && roll < 97) {
@@ -147,7 +147,7 @@ function gamble(user, stake, times = 1) {
 		awardPoints(user, winnings);
 		
 		if (times === 1) {
-			return `You rolled ${roll}! Congrats <:Pog:469004862848368640>! You won ${totalWager} x ${multiplier-1} point(s)! You now have ${pointsByUser[user]} point(s)!`;
+			return `You rolled \`${roll}\`! Congrats <:Pog:469004862848368640>! You won \`${totalWager} x ${multiplier-1}\` point(s)! You now have \`${pointsByUser[user]}\` point(s)!`;
 		}
 	}
 
