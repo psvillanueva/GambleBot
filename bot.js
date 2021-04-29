@@ -174,7 +174,7 @@ function ranks() {
 	Object.entries(pointsByUser)
 		.sort((a, b) => b[1] - a[1])
 		.forEach((value, index) => {
-			message += `${(index+1).toString().padEnd(2)}: ${value[0].padEnd(32)}${value[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} points\n`;
+			message += `${(index+1).toString().padEnd(2)}: ${value[0].padEnd(32)}${value[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}\n`;
 		});
 	message += '```';
 	return message;
